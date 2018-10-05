@@ -43,8 +43,8 @@ def post_build(env, buildlog):
     target = env["modm:target"]
     # get CPU information
     subs = common_target(target)
-    # Extract all source code files
-    subs["sources"] = sorted(p for sources in common_source_files(env, buildlog).values() for p in sources)
+    # Extract all source code files, CMake expects '/' in paths on Windows
+    subs["sources"] = sorted(p.replace('\\\\', '/') for sources in common_source_files(env, buildlog).values() for p in sources)
     # get memory information
     subs["memories"] = common_memories(target)
     # get memory information
